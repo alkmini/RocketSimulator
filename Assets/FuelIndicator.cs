@@ -9,7 +9,7 @@ public class FuelIndicator : MonoBehaviour
    
     public void SetMaxFuel(float fuel)
     {
-        slider.maxValue = 10f;
+        slider.maxValue = fuel;
         slider.value = fuel;
     }
 

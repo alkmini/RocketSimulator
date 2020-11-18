@@ -162,7 +162,7 @@ MonoBehaviour:
   m_VesselMass: 10
   m_EnginePower: 300
   m_FuelPerPower: 0.01
-  m_MaxFuelMass: 10
+  m_MaxFuelMass: 15
   FuelBar: {fileID: 1036220636}
 --- !u!65 &551594577
 BoxCollider:

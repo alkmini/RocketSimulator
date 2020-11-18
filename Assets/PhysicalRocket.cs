@@ -39,10 +39,10 @@ public class PhysicalRocket : MonoBehaviour
         CustomCollisionDetectionAbovePlane();
     }
 
-    private float CustomGravity()
+    private void CustomGravity()
     {
         float RelationMassGravity = m_GravitySpeed;
-        return m_Velocity.y += RelationMassGravity * Time.fixedDeltaTime;
+        m_Velocity.y += RelationMassGravity * Time.fixedDeltaTime;
     }
 
     private void CustomCollision(float collisionDistThisToOther, float dist)
@@ -56,7 +56,7 @@ public class PhysicalRocket : MonoBehaviour
         Vector3 rot = transform.rotation.eulerAngles;
         float distExtentsToCenter = m_ColliderSize.y * 0.5f;
         float distExtentsToCenterOther = m_ColliderSizeOther.y * 0.5f;
-        float collisionDistThisToOther = distExtentsToCenter + distExtentsToCenterOther + 0.1f;
+        float collisionDistThisToOther = distExtentsToCenter + distExtentsToCenterOther;
         float dist = Vector3.Dot(transform.position - m_OtherBox.transform.position, Vector3.up);
 
         if (rot.magnitude == 0)
@@ -68,12 +68,18 @@ public class PhysicalRocket : MonoBehaviour
         }
     }
 
-    private void CustomCollisionDetectionAbovePlane()
+    private void CalculatePowerForLanding(out float distToPlane, out float necessaryLandingMeters)
     {
         float OtherBoxYPos = m_OtherBox.transform.position.y + (m_ColliderSizeOther.y * 0.5f);
-        float distToPlane = this.transform.position.y - OtherBoxYPos;
+        distToPlane = (this.transform.position.y - m_ColliderSize.y * 0.5f) - OtherBoxYPos;
 
-        if (distToPlane < 20 && m_Combustion == true && m_Velocity.y < 0)
+        necessaryLandingMeters = (m_Velocity.y * m_Velocity.y) / (2 * (Mathf.Sqrt(m_EnginePower / m_TotalMass + m_GravitySpeed)));
+    }
+
+    private void CustomCollisionDetectionAbovePlane()
+    {
+        CalculatePowerForLanding(out float distToPlane, out float necessaryLandingMeters);
+        if (distToPlane <= necessaryLandingMeters && m_Combustion == true && m_Velocity.y < 0)
         {
             RocketCombustion();
         }
