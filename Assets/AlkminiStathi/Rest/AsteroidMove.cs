@@ -29,7 +29,7 @@ public class AsteroidMove : MonoBehaviour
 
     void GameStateCheck()
     {
-        float asteroidCollider = 3;//(GetComponent<SphereCollider>().radius;
+        float asteroidCollider = 3;
 
         float dist = Vector3.Distance(Vessel.transform.position, transform.position);
 
@@ -37,7 +37,7 @@ public class AsteroidMove : MonoBehaviour
         {
             ast.SendGameOver();
             gameOver = true;
-            //Destroy(gameObject);
+            
             moveDirection = Vector3.Cross(moveDirection, Vector3.forward);
         }
         

@@ -1,2 +1,3 @@
 # RocketSimulator
- 
+
+RocketSimulator\Images\RocketSimulatorPhoto
